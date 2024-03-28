@@ -8,6 +8,8 @@ android {
     namespace = "ru.code.codeworkers"
     compileSdk = 34
 
+    buildFeatures.viewBinding = true
+
     defaultConfig {
         applicationId = "ru.code.codeworkers"
         minSdk = 24
@@ -59,4 +61,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-messaging-ktx:23.4.1")
     implementation ("com.google.android.gms:play-services-base:18.3.0")
+    kapt ("androidx.room:room-compiler:2.6.1")
 }
