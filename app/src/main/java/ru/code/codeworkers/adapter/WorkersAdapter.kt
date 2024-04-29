@@ -8,10 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.code.codeworkers.databinding.WorkersListBinding
 import ru.code.codeworkers.dto.Worker
 
-class WorkersAdapter: ListAdapter<Worker, WorkersViewHolder>(WorkerDifCallBack) {
+
+interface onInteractionListener{
+//    fun onLike(worker: Worker)
+//    fun onShare(worker: Worker)
+//    fun onRemove(worker: Worker)
+//    fun onEdit(worker: Worker)
+    fun onClick(worker: Worker)
+}
+class WorkersAdapter(private val onInteractionListener: onInteractionListener): ListAdapter<Worker, WorkersViewHolder>(WorkerDifCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkersViewHolder {
         val binding = WorkersListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return WorkersViewHolder(binding)
+        return WorkersViewHolder(binding, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: WorkersViewHolder, position: Int) {
@@ -21,10 +29,17 @@ class WorkersAdapter: ListAdapter<Worker, WorkersViewHolder>(WorkerDifCallBack) 
 
 class WorkersViewHolder (
     private  val binding: WorkersListBinding,
+    private val onInteractionListener: onInteractionListener
+
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(worker: Worker) {
         binding.apply {
+            name.text = worker.name
+            position.text = worker.position
 
+            root.setOnClickListener {
+                onInteractionListener.onClick(worker)
+            }
         }
     }
 }
